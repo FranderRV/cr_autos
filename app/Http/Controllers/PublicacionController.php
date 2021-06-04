@@ -7,13 +7,17 @@ use Illuminate\Support\Facades\Http;
 
 class PublicacionController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware('Login');
+    }
     public function index(){
-        if (isset($_COOKIE['usuario'])) {
+       // if (isset($_COOKIE['usuario'])) {
             $lista = Http::get('http://localhost:51430/api/vehiculo/allinfo');
              return view('vehiculo.publicaciones',['lista'=>$lista->json()]);
-            }else{
-                return redirect()->to('/');
-            } 
+          //  }else{
+          //      return redirect()->to('/');
+          //  }
     }
 
     public function update(Request $request){

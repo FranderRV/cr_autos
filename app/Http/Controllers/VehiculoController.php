@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Storage;
 
 class VehiculoController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware('Login');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -245,10 +249,10 @@ class VehiculoController extends Controller
         $this->delete_perfiles_carro($id); //eliminar fots perfil carro
         $this->delete_galeria($id); //eliminar galería
         Http::delete('http://localhost:51430/api/vehiculo/' . $id);
-        
+
         return back();
     }
- 
+
     public function delete_galeria($id)
     {
         $lista = Http::get('http://localhost:51430/api/galeria/lista?id=' . $id);

@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Storage;
 
 class GaleriaController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware('Login');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -36,7 +40,7 @@ class GaleriaController extends Controller
      */
     public function store(Request $request)
     {
-   
+
         $path = public_path().'/uploads/';
         $files = $request->file('file');
         foreach($files as $file){
@@ -91,7 +95,7 @@ class GaleriaController extends Controller
     {
         Storage::delete('public/galeria/' . $url);
         Http::delete('http://localhost:51430/api/galeria/'.$id2);
-        
+
         $galeria = Http::get('http://localhost:51430/api/galeria/lista?id='.$id);
         return $galeria->json();
     }

@@ -12,6 +12,10 @@ use Symfony\Component\HttpFoundation\Cookie as HttpFoundationCookie;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware('Login');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -56,11 +60,8 @@ class UserController extends Controller
 
     public function editar()
     {
-        if (isset($_COOKIE['usuario'])) {
             return view('usuario.perfil');
-        } else {
-            return redirect()->to('/');
-        }
+       
     }
 
     /**
@@ -139,7 +140,7 @@ class UserController extends Controller
                 }
             }
         }
-    } 
+    }
 
     public function destroy()
     {

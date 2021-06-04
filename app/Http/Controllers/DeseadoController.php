@@ -8,14 +8,16 @@ use NumberFormatter;
 
 class DeseadoController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware('Login');
+    }
     public function index(){
-        if (isset($_COOKIE['usuario'])) {
-   
+
+
         $lista = Http::get('http://localhost:51430/api/vehiculo/deseados?id='.(json_decode(\Request::cookie('usuario'),true)['id']));
          return view('vehiculo.favoritos',['lista'=>$lista->json()]);
-        }else{
-            return redirect()->to('/');
-        }
+
     }
     public function delete($id)
     {
@@ -63,6 +65,6 @@ class DeseadoController extends Controller
         }else{
             return 'false'; //no existe
         }
-        
+
     }
 }
